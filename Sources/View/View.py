@@ -5,19 +5,8 @@ class View(tk.Toplevel):
     def __init__(self, master):
         tk.Toplevel.__init__(self, master)
         self.protocol('WM_DELETE_WINDOW', self.master.destroy)
-        tk.Label(self, text='My Money').pack(side='left')
-        self.moneyCtrl = tk.Entry(self, width=8)
-        self.moneyCtrl.pack(side='left')
-
-    def SetMoney(self, money):
-        self.moneyCtrl.delete(0, 'end')
-        self.moneyCtrl.insert('end', str(money))
-
-
-class ChangerWidget(tk.Toplevel):
-    def __init__(self, master):
-        tk.Toplevel.__init__(self, master)
-        self.addButton = tk.Button(self, text='Add', width=8)
-        self.addButton.pack(side='left')
-        self.removeButton = tk.Button(self, text='Remove', width=8)
-        self.removeButton.pack(side='left')
+        can = tk.Canvas(self,
+                        width=250,
+                        height=140)
+        can.create_line(125, 70, 0, 0, fill="black", width="10")
+        can.pack()
