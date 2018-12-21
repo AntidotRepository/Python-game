@@ -43,16 +43,19 @@
 ##
 ## following is a Tkinter approximation of the original example.
 
-from Model.Model import Model
+from Model.Buddy import Buddy
 from View.View import View
 # from View.View import ChangerWidget
 
 
 class Controller:
     def __init__(self, root):
-        self.model = Model()
-    #    self.model.myMoney.addCallback(self.MoneyChanged)
-        self.view1 = View(root)
+    #    self.model = Model()
+        self.buddy = Buddy()
+        print "Hey"
+        self.buddy.myBuddy.addCallback(self.drawBuddy)
+        self.view = View(root)
+        self.buddy.update()
         # self.view2 = ChangerWidget(self.view1)
         # self.view2.addButton.config(command=self.AddMoney)
         # self.view2.removeButton.config(command=self.RemoveMoney)
@@ -66,3 +69,6 @@ class Controller:
 
     # def MoneyChanged(self, money):
     #     self.view1.SetMoney(money)
+    def drawBuddy(self, data):
+        self.view.drawBuddy(data)
+

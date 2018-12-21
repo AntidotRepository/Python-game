@@ -5,12 +5,15 @@ class Observable:
 
     def addCallback(self, func):
         self.callbacks[func] = 1
+        print self.callbacks
 
     def delCallback(self, func):
         del self.callback[func]
 
     def _docallbacks(self):
+        print self.callbacks
         for func in self.callbacks:
+            print("Yolo")
             func(self.data)
 
     def set(self, data):
