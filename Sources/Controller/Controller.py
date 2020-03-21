@@ -35,6 +35,8 @@ class Controller:
                         x_change = -1
                     if event.key == pygame.K_RIGHT:
                         x_change = 1
+                    if event.key == pygame.K_ESCAPE:
+                        crashed = True
 
                 if event.type == pygame.KEYUP:
                     if event.key == pygame.K_LEFT or \
