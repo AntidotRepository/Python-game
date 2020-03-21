@@ -1,68 +1,48 @@
-# !/usr/bin/python2.7
+# !/usr/bin/python3.7
 # -*- coding: utf-8 -*-
-# from View.GameView import GameView
 
-
-# class Controller:
-#     test = None
-
-#     def __init__(self):
-#         self.test = "Hello"
-#         GV = GameView()
-
-#     def func(self):
-#         print self.test
-
-##Some points to mention...
-##
-##The model knows nothing about the view or the controller.
-##The view knows nothing about the controller or the model.
-##The controller understands both the model and the view.
-##
-##The model uses observables, essentially when important data is changed,
-##any interested listener gets notified through a callback mechanism.
-##
-##The following opens up two windows, one that reports how much money you
-##have, and one that has two buttons, one to add money and one to remove
-##money.
-##
-##The important thing is that the controller is set up to monitor changes
-##in the model.  In this case the controller notices that you clicked a
-##button and modifies the money in the model which then sends out a
-##message that it has changed.  The controller notices this and updates
-##the widgets.
-##
-##The cool thing is that anything modifying the model will notify the
-##controller.  In this case it is the controller modifying the model, but it
-##could be anything else, even another controller off in the distance
-##looking at something else.
-##
-##The main idea is that you give a controller the model and view that it
-##needs, but the model's can be shared between controllers so that when
-##the model is updated, all associated views are updated. -Brian Kelley
-##
-## following is a Tkinter approximation of the original example.
-
-from Model.Model import Model
+from Model.Car import Car
 from View.View import View
 # from View.View import ChangerWidget
+import pygame
+
+
+WIN_WIDTH = 750
+WIN_HEIGHT = 400
 
 
 class Controller:
-    def __init__(self, root):
-        self.model = Model()
-    #    self.model.myMoney.addCallback(self.MoneyChanged)
-        self.view1 = View(root)
-        # self.view2 = ChangerWidget(self.view1)
-        # self.view2.addButton.config(command=self.AddMoney)
-        # self.view2.removeButton.config(command=self.RemoveMoney)
-    #    self.MoneyChanged(self.model.myMoney.get())
+    def __init__(self):
+        print("Create controller")
+        self.car = Car()
+        self.car.myPos.addCallback(self.carPosChanged)
+        self.view1 = View(WIN_WIDTH, WIN_HEIGHT)
 
-    # def AddMoney(self):
-    #     self.model.addMoney(10)
+        self.car.set_pos(WIN_WIDTH / 2, WIN_HEIGHT * 0.7)
+        crashed = False
+        x_change = 0
 
-    # def RemoveMoney(self):
-    #     self.model.removeMoney(10)
+        while not crashed:
+            for event in pygame.event.get():
+                if event.type == pygame.QUIT:
+                    crashed = True
 
-    # def MoneyChanged(self, money):
-    #     self.view1.SetMoney(money)
+                if event.type == pygame.KEYDOWN:
+                    if event.key == pygame.K_LEFT:
+                        x_change = -1
+                    if event.key == pygame.K_RIGHT:
+                        x_change = 1
+
+                if event.type == pygame.KEYUP:
+                    if event.key == pygame.K_LEFT or \
+                            event.key == pygame.K_RIGHT:
+                        x_change = 0
+
+            self.car.move(x_change, 0)
+            self.view1.update()
+
+        pygame.quit()
+        quit()
+
+    def carPosChanged(self, posXY):
+        self.view1.setCarPos(posXY[0], posXY[1])
