@@ -10,11 +10,14 @@ import pygame
 WIN_WIDTH = 750
 WIN_HEIGHT = 400
 
+CAR_WIDTH = 73
+CAR_HEIGHT = 73
+
 
 class Controller:
     def __init__(self):
         print("Create controller")
-        self.car = Car()
+        self.car = Car(CAR_WIDTH, CAR_HEIGHT)
         self.car.myPos.addCallback(self.carPosChanged)
         self.view1 = View(WIN_WIDTH, WIN_HEIGHT)
 
@@ -38,7 +41,7 @@ class Controller:
                             event.key == pygame.K_RIGHT:
                         x_change = 0
 
-            self.car.move(x_change, 0)
+            self.car.move(x_change, 0, 0, WIN_WIDTH, 0, WIN_HEIGHT)
             self.view1.update()
 
         pygame.quit()
