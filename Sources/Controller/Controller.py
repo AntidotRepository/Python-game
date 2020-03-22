@@ -2,9 +2,11 @@
 # -*- coding: utf-8 -*-
 
 from Model.Car import Car
+from Model.Obstacle import Obstacle
 from View.View import View
 # from View.View import ChangerWidget
 import pygame
+import random
 
 
 WIN_WIDTH = 750
@@ -19,7 +21,18 @@ class Controller:
         print("Create controller")
         self.car = Car(CAR_WIDTH, CAR_HEIGHT)
         self.car.myPos.addCallback(self.carPosChanged)
+        self.obstacles = list()
         self.view1 = View(WIN_WIDTH, WIN_HEIGHT)
+        for i in range(0, 4):
+            posX = random.randrange(0, WIN_WIDTH)
+            posY = random.randrange(0, WIN_HEIGHT)
+            width = random.randrange(40, 200)
+            height = random.randrange(40, 200)
+            obs = Obstacle(i, posX, posY, width, height)
+            self.view1.add_obstacle(posX, posY, width, height)
+            obs.myPos.addCallback(self.obsPosChanged)
+            obs.set_pos(posX, posY, width, height)
+            self.obstacles.append(obs)
 
         self.car.set_pos(WIN_WIDTH / 2, WIN_HEIGHT * 0.7)
         crashed = False
@@ -51,3 +64,6 @@ class Controller:
 
     def carPosChanged(self, posXY):
         self.view1.setCarPos(posXY[0], posXY[1])
+
+    def obsPosChanged(self, xywh):
+        self.view1.setObsPos(xywh[0], xywh[1], xywh[2], xywh[3], xywh[4])
