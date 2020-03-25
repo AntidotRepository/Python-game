@@ -9,7 +9,7 @@ class Obstacle:
         self.y = y
         self.w = w
         self.h = h
-        self.speed = 5
+        self.speed = 2
 
     def set_pos(self, x, y, w, h):
         self.x = x
@@ -29,4 +29,4 @@ class Obstacle:
             self.y = minY
         if self.y > (maxY - self.h):
             self.y = (maxY - self.h)
-        self.myPos.set((self.x, self.y, self.w, self.h))
+        self.myPos.set((self.idx, self.x, self.y, self.w, self.h))

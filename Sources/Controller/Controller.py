@@ -25,7 +25,7 @@ class Controller:
         self.view1 = View(WIN_WIDTH, WIN_HEIGHT)
         for i in range(0, 4):
             posX = random.randrange(0, WIN_WIDTH)
-            posY = random.randrange(0, WIN_HEIGHT)
+            posY = 0
             width = random.randrange(40, 200)
             height = random.randrange(40, 200)
             obs = Obstacle(i, posX, posY, width, height)
@@ -56,6 +56,8 @@ class Controller:
                             event.key == pygame.K_RIGHT:
                         x_change = 0
 
+            for an_obs in self.obstacles:
+                an_obs.move(0, 1, 0, WIN_WIDTH, 0, 1000)
             self.car.move(x_change, 0, 0, WIN_WIDTH, 0, WIN_HEIGHT)
             self.view1.update()
 
